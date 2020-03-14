@@ -2,28 +2,32 @@
 // =================================================
 
 $(document).ready(function() {
-  // Loads saved time data from localStorage, and prints it to screen
-  scheduleData = JSON.parse(localStorage.getItem("Schedule"));
-  $(".hour").each(function() {
-    $(this)
-      .next()
-      .val(scheduleData[$(this).html()]);
-  });
+  // Loads saved time data from localStorage, and displays it on browser
+  // window, if it exists
+  if (localStorage.length !== 0) {
+    eventStorage = JSON.parse(localStorage.getItem("Schedule"));
+    $(".hour").each(function() {
+      $(this)
+        .next()
+        .val(eventStorage[$(this).html()]);
+    });
+  } else {
+    // Creates object to store in localStorage
+    var eventStorage = {
+      "9AM": "",
+      "10AM": "",
+      "11AM": "",
+      "12PM": "",
+      "1PM": "",
+      "2PM": "",
+      "3PM": "",
+      "4PM": "",
+      "5PM": ""
+    };
+  }
   // Gets date from moment object and prints value on browser window
   var date = moment().format("dddd, MMMM Do");
   $("#currentDay").text(date);
-  // Creates object to store in localStorage
-  var eventStorage = {
-    "9AM": "",
-    "10AM": "",
-    "11AM": "",
-    "12PM": "",
-    "1PM": "",
-    "2PM": "",
-    "3PM": "",
-    "4PM": "",
-    "5PM": ""
-  };
   // Grabs current time and formats to match strings in timeblock
   var hour = moment().format("LT");
   var formattedHour = hour.replace(/:\d+ /, "");
