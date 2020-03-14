@@ -4,6 +4,11 @@
 $(document).ready(function() {
   // Loads saved time data from localStorage, and prints it to screen
   scheduleData = JSON.parse(localStorage.getItem("Schedule"));
+  $(".hour").each(function() {
+    $(this)
+      .next()
+      .val(scheduleData[$(this).html()]);
+  });
   // Gets date from moment object and prints value on browser window
   var date = moment().format("dddd, MMMM Do");
   $("#currentDay").text(date);
@@ -20,8 +25,7 @@ $(document).ready(function() {
     "5PM": ""
   };
   // Grabs current time and formats to match strings in timeblock
-  //   var hour = moment().format("LT");
-  var hour = "2:33 PM";
+  var hour = moment().format("LT");
   var formattedHour = hour.replace(/:\d+ /, "");
   var middayTag = hour.replace(/\d+:\d+ /, "");
   // Styles columns based on time data. If the time is not on the list of timeblocks,
